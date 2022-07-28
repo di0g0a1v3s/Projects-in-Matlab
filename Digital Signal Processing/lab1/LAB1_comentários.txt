@@ -1,0 +1,85 @@
+   R.1c)
+
+   No gráfico do sinal x em função do tempo observamos um sinal
+   aparentemente sinusoidal, com uma frequência que é de facto 300Hz
+   (ao fazer zoom ao gráfico verificamos de 3 períodos ocupam 0.01s).
+   A representação do sinal não aparenta ser uma sinusoide perfeita uma vez que a frequência de
+   amostragem é de apenas 10 vezes a frequência do sinal, ou seja, o sinal é amostrado apenas 10
+   vezes em cada período, o que não fornece pontos suficientes para se
+   parecer com uma sinusoide real.
+
+   No gráfico do espectrorama é-nos possível visualizar, para cada secção
+   de tempo, a potência de cada frequência do sinal. Como o nosso sinal é
+   periódico, o gráfico é constante no tempo. No gráfico verificamos que
+   existe uma risca amarela (correspondente à potência máxima) para a
+   frequência de 300Hz, o que seria de esperar visto que é essa a
+   frequência do sinal. Verificamos também que a potência diminui à medida
+   que nos afastamos dos 300Hz. A razão pela qual não existe apenas uma
+   risca nos 300Hz e potência nula para as restantes frequências tem a ver
+   com o facto de ocorrer espalhamento espectral ("spectral leakage") derivado 
+   de se ter utilizado o método das janelas.
+   
+   
+   R.2a)
+
+   Desta vez, no gráfico do sinal x em função do tempo, ao contrário do que
+   se poderia esperar, não observamos um sinal com frequência de 2700Hz mas
+   sim um sinal igual ao que se observou no exercício anterior, com
+   frequência de 300Hz. Isto acontece devido a um fenómeno chamado
+   espelhamento espectral ("aliasing"). Quando não é cumprida a condição do
+   teorema da amostragem (segundo a qual a frequência de amostragem deve
+   ser pelo menos superior ao dobro da frequência do sinal), as componentes
+   do sinal com frequência superior a metade da frequência de amostragem
+   são movidas para frequências mais baixas (neste caso a componente de
+   2700Hz foi movida para 300Hz, uma vez que FreqEspelhada = FreqAmostragem
+   - FreqComponente = 3000Hz - 2700Hz = 300Hz). Por esta razão, depois de amostrado,
+   o sinal aparenta ter a frequência de 300Hz.
+
+   Apesar dos sinais originais serem diferentes nos dois exercícios, depois da
+   amostragem eles passaram a ser efetivamente iguais. Assim, o espectrorama
+   observado para este sinal é exatamente igual ao observado para o sinal
+   do exercício anterior.
+   
+   
+   R.3a)
+   
+   Fs = 44100 Hz
+   
+   Para obter a largura da janela que permite uma boa representação do sinal
+   de áudio no espectrograma em função do tempo-frequência, recorreu-se a um
+   ciclo onde se varia o número de amostras, N, o que fará mudar a resolução
+   da janela. Para um valor da ordem de 10^3, as riscas no espectro são
+   nítidas. Contudo, para valores muito altos a resolução da janela é tão
+   pequena que não se distingue as riscas do sinal. Portanto a escolha
+   baseou-se num valor de N não muito alto (acima dos 3000 a resolução começa
+   a diminuir), mas também não num muito baixo (abaixo dos 500 a resolução
+   começa a aumentar em frequência o que faz com que haja sobreposição de
+   riscas)
+   Para 1024 amostras na
+   janela de Hanning, o espectrograma apresenta suficientemente clara as
+   riscas nas várias frequências do sinal.
+   
+   
+   R.4a)
+   
+   Ora Fs = 44100 Hz e a frequência máxima (fmax) alcançada durante os 15 segundos
+   de áudio é de cerca de 5000 Hz. Na alínea anterior não havia aliasing,
+   uma vez que o teorema da amostragem era satisfeito para todas as
+   frequências da porção de áudio (2*fmax < Fs). 
+
+   Neste caso, ao diminuir a frequência de amostragem 5 vezes (Fs' = 8820 Hz), exite apenas
+   aliasing para componentes para frequências acima de 4410 Hz (Fs'/2).
+   Ouve-se um áudio diferente ao original, que parece ter interferências.
+
+
+	R.5a)
+	
+	O sinal é filtrado por um filtro FIR cuja frequência de corte é 0.2*Pi. Ora as frequências
+	acima dos 4410 Hz (f = (0.2 Pi * Fs)/(2*Pi)) serão cortadas. Com uma amsotragem com frequência
+	de 8820 Hz (Fs/5) implicaria no fenónmeno de aliasing se não fosse o filtro FIR. Por isso
+	ao ouvir o sinal de saída, não se ouve as mesmas características do áudio da alínea 4a). 
+	Com o corte do filtro, nota-se ainda que as notas mais agudas do áudio não se ouvem.
+   
+   
+   
+ 

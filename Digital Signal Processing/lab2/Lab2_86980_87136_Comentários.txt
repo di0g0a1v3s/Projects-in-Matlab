@@ -1,0 +1,135 @@
+
+Lab 2 Processamento Digital de Sinais
+
+86980   Diogo Martins Alves
+87136	Xavier Abreu Dias
+
+
+R1.b)
+
+O gráfico de x(n), como se pode verificar através da sua expressão
+matemática, por ser uma soma de sinusóides é periódico para um alcance de
+n muito mais alto do que especificado. 
+Se o sinal fosse contínuo então sim, confirmava-se que dentro da janela do
+gráfico o sinal é periódico, pois calcula-se, através da
+expressão, que a frequência do sinal é dada pela sua fundamental, 'wo', que é 
+o mínimo múltiplo comum das frequências das 3 sinusóides. 
+Ou seja, MMC(wo, 2wo, 5wo) = wo, o que em período se traduz em 
+To = 2pi/wo = 512/5.2 s. Ora, este resultado não é um número natural.
+
+Para sinais discretos o cálculo do período fundamental, No, é feito com
+base no período de cada sinal no tempo discreto que é um número natural.
+O cálculo do período de cada sinal que compõe x[n] é baseado em
+determinar um certo m tal que N = m*(2pi/freq) seja natural. 
+Assim, consegue-se obter N1 = 2560, N2 = 5120 e N3 = 12800 respetivamente
+para os sinais com frequência wo, 2wo e 5wo.
+E o período do sinal x[n], No, é 2560 ( = MMC (2560, 5120, 12800)).
+Conclui-se que seriam necessários pelo menos 2560 pontos para se ver que
+o sinal se repete. Para confirmar que o sinal não se repete para n entre
+[0, M-1], basta ver para o máximo por exemplo. O primeiro máximo situa-se
+em n = 89 e tem o valor de 9.016. O segundo em n = 187, mas com valor de
+9.112.
+
+
+
+R1.c)
+
+O espetro do sinal tem os seus primeiros máximos para frequências iguais
+a 0.06136 rad/s, 0.1227 rad/s e 0.3191 rad/s. Estas frequências
+correspondem respetiva e aproximadamente às frequências wo, 2*wo e 5*wo 
+dos sinais que compõem x[n]. Repara-se que devido a 'spectral leakage'
+o gráfico da magnitude do sinal não é composto por impulsos de Dirac,
+nas frequências indicadas. 'Spectral leakage' ocorre quando o sinal tem
+componentes de frequência f tal que f/delta_f não é um número inteiro 
+(com delta_f = f_s/N = 1/N). Neste caso temos os seguintes valores de f/delta_f:
+- w = w0 => f/delta_f = 5.2
+- w = 2*w0 => f/delta_f = 10.6
+- w = 5*w0 => f/delta_f = 26
+Assim, ocorre 'spectral leakage' apenas para as duas primeiras frequências,
+visto que na terceira f/delta_f é um número inteiro.
+
+
+
+R1.d)
+
+Os três maiores picos da magnitude do espetro do sinal são os
+seguintes:
+ - magnitude = 2.294 (n=261, fase= 1.6611 rad e w=0.0614 rad/s)
+ - magnitude = 0.7867 (n=266, fase=-2.8673 rad e w=0.1227 rad/s) 
+ - magnitude = 1.479 (n=282, fase= 3.0211 rad e w=0.3191 rad/s). 
+(Nota: considera-se n = {0,..., N-1}
+
+
+
+R1.e)
+
+Ao fazer uma comparação do sinal reconstruído com o original, repara-se
+que o sinal não fica totalmente bem reconstruído. De facto, devido à
+'spectral leakage', os valores de amplitude, frequência e fase que foram
+utilizados para reconstruir o sinal não estão totalmente corretos e por 
+isso os dois sinais não se sobrepôem no gráfico. Nota-se que, se se
+considerasse que o sinal fosse contínuo, o sinal não é periódico
+para os 512 pontos. 
+
+
+
+R1.f)
+
+(d)
+Os três maiores picos da magnitude do espetro do sinal são os
+seguintes:
+ - magnitude = 2.294 (n=522, fase = 1.6611 rad e w=0.0614 rad/s)
+ - magnitude = 0.9745 (n=533, fase = 1.6276 rad e w=0.1289 rad/s) 
+ - magnitude = 1.479 (n=564, fase = 3.0211 rad e w=0.3191 rad/s). 
+(Nota: considera-se n = {0,..., N-1}
+
+(e)
+Ao aumentar o valor de N para 1024, significa reduzir a resolução do
+espectro, uma vez que f = Fs/N. Portanto, pode-se verificar mais
+picos que o caso para N = 512 podendo confirmar na brusca variação da
+fase. Como a resolução é menor, os valores de frequência, fase e
+magnitude utilizados para reconstruir o sinal são mais próximos dos
+valores reais, o que leva a uma melhor reconstrução.
+
+
+
+
+R2.b) 
+O orador aparenta ser o professor Jorge S. Marques, a dizer a frase "How
+many roads must a man walk down".
+
+
+
+R2.d)
+
+Analisando a DFT do sinal, verificamos que este é constituido por várias
+frequências, sendo que os três maiores picos da magnitude do espetro do 
+sinal são os seguintes:
+ - magnitude = 0.009226 (n=1030, fase = -0.6054 rad e f=129.20 Hz (w=0.01841 rad/s))
+ - magnitude = 0.005528 (n=1036, fase = -0.4384 rad e f=258.40 Hz (w=0.03682 rad/s)) 
+ - magnitude = 0.003674 (n=1042, fase = -2.614 rad e f=387.60 Hz (w=0.05522 rad/s))
+(Nota: considera-se n = {0,..., N-1}
+Assim, o sinal reconstruído será um somatório de cosenos com as frequências mencionadas,
+cuja fase é igual à fase da DFT e a amplitude é o dobro da amplitude da
+DFT, uma vez que a DFT de um cosseno terá metade da amplitude do sinal.
+
+
+
+R2.e)
+
+Comparando o sinal original com o sinal reconstruído verificamos em
+primeiro lugar que o original é muito mais detalhado. Isto deve-se ao
+facto de no sinal reconstruído só terem sido utilizado as 3 principais
+frequências. Como os detalhes correspondem a frequências mais altas do
+sinal original, estes não estão presentes no sinal reconstruído.
+Verificamos também que, apesar de o sinal original não ter um período
+concreto, é possível ver que mais ao menos se repete ao fim de um certo
+intervalo de tempo, que, observado os dois sinais lado a lado, é igual ao
+período do sinal reconstruído. Por fim, verificamos que o sinal
+reconstruído tem um comportamento semelhante ao sinal original, na medida
+em que crescem/decrescem em simultâneo.
+Todas estas observações são compatíveis com o facto de o sinal
+reconstruído ser uma versão mais simplificada do sinal original, que só
+contém as frequência predominantes deste (nomeadamente de mais baixa
+frequência).
+

@@ -1,0 +1,96 @@
+Lab 4 Processamento Digital de Sinais
+
+86980   Diogo Martins Alves
+87136	Xavier Abreu Dias
+
+R1.a) 
+(ver função getLongTermCoef.m)
+O coeficiente 'a' é calculado através do método de mínimos
+quadradaos. Ao derivar a função de custo, a soma dos erros quadráticos,
+em ordem a 'a', consegue-se obter o coeficiente como sendo a razão
+entre a soma de (N+1) a M de x(n)*x(n-N) e a soma  de (N+1) a M de 
+(x(n-N))^2.
+
+
+R1.b)
+Observa-se no gráfico dos dados previstos com os de treino em
+sobreposição, que uma espécie de sinal atrasado de N=96 (correspondente a
+um dia/24h) em relação aos dados de treino à parte de um factor de escala
+'a'. 
+
+
+R1.c)
+O coeficiente calculado, 'a', é aproximadamente igual a 0.9810. A energia
+do resídual é dada por E_r = Som(r(n)^2), em que r(n) é dado por x(n) - a*x(n-N), ou seja, a
+diferença entre os dados de treino e os dados previstos. 
+A energia do residual r(n) é de cerca de 0.3478 após o primeiro dia.
+É de reparar que a energia residual deve-se ao facto de que a energia à
+mesma hora de um dia para o outro não ser exatamente igual (à parte do
+fator de escala 'a'), o que introduz ruído nos dados de previsão.
+
+
+R1.d)
+(ver função getShortTermCoefs.m)
+Os P coeficientes 'a' (um vetor) são calculados através do método de
+mínimos quadrados residuais. Assim os P coeficientes, a serem estimados é
+dados pela expressão 'a_est' = ((H'*H)^-1) * H'*x, onde H é uma matriz
+de dimensão (P x M-P).
+
+
+R1.e) 
+Verifica-se os valores de predição são bastante próximos dos valores de
+treino. Relativamente à predição com o modelo de longo termo, repara-se
+que recorrendo ao de curto termo a energia do residuo é mais baixo. 
+
+
+R1.f) 
+Os coeficientes estimados, 'a', são aproximadamente igual a 
+'a' = [0.7029; 0.1360; 0.0123; 0.3028; -0.1771; -0.0300]. Quanto à
+energia residual dos dados previstos, Som(e(n)^2), consegue-se obter os
+valores que e(n) que adquire fazendo a diferença entre os dados de energia residual
+correspondente à diferença entre os dados de treino e os dados previstos
+de (r(n)) e a energia residual prevista (r_pred(n)). A energia do
+residual e(n) é de cerca de 0.1523.
+
+
+
+R2.a) (ver função detectAnomalies.m)
+Esta função detecta anomalias entre o sinal de entrada e o sinal predito através do
+modelo "model", com coeficientes "model_coefficients" e atraso
+"model_delay". Nos instantes em que o sinal predito tem desvio relativo superior a 
+"min_relative_deviation" em relação ao sinal original e desvio absoluto superior a
+"min_absolute_deviation", o sinal de saída vale 1, caso contrário vale 0.
+
+
+R2.b)
+Observando sobrepostos os gráficos do sinal de teste e da sua previsão,
+utilizado o modelo a longo prazo com N=96 (um ciclo), verificamos que como
+o coeficiente "a" é igual a 0.9810 (aproximadamente 1), a previsão acaba
+por ser praticamente uma deslocação no tempo de um ciclo do sinal de
+teste. Assim, são detetadas poucas anomalias em ciclos em que o sinal tem
+comportamento normal e em que o ciclo anterior também tem comportamento
+normal, mas em ciclos em que o sinal tenha um comportamento fora do comum ou
+em que o ciclo anterior tenha um comportamento anormal, são detetadas
+grandes anomalias
+
+Observando sobrepostos os gráficos do sinal de teste e da sua previsão,
+utilizado o modelo a curto prazo com P=96 (um ciclo), verificamos que o
+número de anomalias é inferior relativamente à situação anterior, no
+entanto continuam a ser detetadas anomalias nos ciclos em que o sinal tem
+comportamento anormal, bem como no ciclo seguinte. No entanto, e ao
+contrário da situação anterior, as anomalias no ciclo seguinte ao 
+comportamento anormal só são detetadas se o tal comportamento anormal for
+muito acentuado, como é o caso do maior pico do sinal de teste.
+
+Assim, para a deteção de anomalias, o modelo a longo prazo produz muitos
+mais falsos-positivos, especialmente nos ciclos imediatamente a seguir à
+anomalia, enquanto que o modelo a curto prazo produz mais
+falsos-negativos, em situações em que a anomalia não é tão acentuada.
+
+
+R2.c)
+Utilizando o modelo a curto prazo com um valor de p menor (por exemplo 6),
+é possível mitigar o problema da deteção de anomalias no ciclo
+imediatamente após a anomalia, uma vez que a "memória" do sistema é
+reduzida e a dependência entre os valores previstos e os valores do
+ciclo anterior do sinal original é reduzida.
